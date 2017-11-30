@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Banner</title>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        .banner {
+            position: relative;
+            top:-10px;
+            left:-10px;
+            overflow:hidden;
+            width: 100%;
+            font-size: 3em;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            letter-spacing: 10px;
+            line-height: 1.5;
+        }
+        
+        .bg {
+            height: 105%;
+            width: 105%;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: -1;
+            background: linear-gradient( rgba(0, 0, 50, 0.5), rgba(0, 0, 50, 0.5)), url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/New_York_City_-_Brooklyn_Bridge_-_Manhattan-side_tower_-_0025.jpg/1280px-New_York_City_-_Brooklyn_Bridge_-_Manhattan-side_tower_-_0025.jpg);
+            background-size: cover;
+            /* put any filters below */
+            -webkit-filter: blur(4px);
+        }
+        
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-weight: 300;
+        }
+        
+        h1,
+        h2 {
+            letter-spacing: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="bg"></div>
+        <h1>HSTAT</h1>
+        <h2>Software Engineering</h2>
+    </div>
+</body>
+
+</html>
