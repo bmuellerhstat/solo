@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
+        <style>
+            /* CSS */
+
+            body {
+                margin-top: 30px;
+            }
+
+            #sheet {
+                width: 100%;
+                height: 400px;
+            }
+
+            #info {
+                display: none;
+            }
+
+            * {
+                font-family: Arial;
+                /* font-size: 150%; */
+            }
+
+            h1 {
+                font-size: 300%;
+            }
+
+            ul {
+                margin-bottom: 800px;
+            }
+
+            li {
+                font-size: 200%;
+                margin-bottom: 20px;
+            }
+
+            p {
+                margin-bottom: 500px;
+            }
+            
+        </style>
+        
+        <title>Two Truths and a Lie</title>
+    </head>
+    <body>
+        <!-- HTML -->
+        <div class="container">
+
+            <div id="intro">
+                <h1>Two Truths and a Lie</h1>
+                <h3>Paste ALL rows of Name/Truth/Truth/Lie from Google Sheet</h3>
+                <textarea id="sheet"></textarea><br>
+                <button class="btn btn-primary" id="go">Go!</button>
+            </div>
+
+            <div id="info">
+
+            </div>
+
+
+
+        </div>
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="script.js"></script> -->
+        <script>
+            // JS
+
+            var info = document.querySelector('#info');
+            
+            document.querySelector('#go').addEventListener('click',function(){
+                document.querySelector('#intro').style.display = 'none';
+                info.style.display = 'block';
+                
+
+                // var data = `Brian	Brian's truth 1	Brian's truth 2	Brian's lie
+// Emily	Emily's truth 1	Emily's truth 2	Emily's lie`
+
+                var data = document.querySelector('#sheet').value;
+
+                dataArr = data.split(/[\n\t]/)
+                // console.log(dataArr)
+                people = []
+
+                var currentPersonIndex = -1;
+                for(var i = 0; i < dataArr.length; i++) {
+                    if(i % 4 == 0) { // name
+                        currentPersonIndex++;
+                        people.push({"name":dataArr[i]})
+                        // console.log(dataArr[i])
+                    } else if(i % 4 == 1) { // truth 1
+                        people[currentPersonIndex].truth1 = dataArr[i]
+                    }  else if(i % 4 == 2) { // truth 2
+                        people[currentPersonIndex].truth2 = dataArr[i]
+                    }  else if(i % 4 == 3) { // lie
+                        people[currentPersonIndex].lie = dataArr[i]
+                    }
+                }
+
+                function shuffle(array) {
+                    array.sort(() => Math.random() - 0.5);
+                }
+
+                // var randomPerson = people[Math.floor(Math.random()*people.length)]
+                // console.log(randomPerson.name)
+                // var info3 = [randomPerson.truth1, randomPerson.truth2, randomPerson.lie]
+                // console.log("Lie: " + randomPerson.lie)
+                // shuffle(info3)
+
+                people.forEach(function(person){
+                    var h1name = document.createElement('h1');
+                    h1name.innerHTML = person.name;
+                    h1name.addEventListener('click',function(){
+                        alert(person.lie);
+                    });
+                    info.appendChild(h1name)
+                    
+                    var info3 = [person.truth1, person.truth2, person.lie]
+                    shuffle(info3)
+                    console.log(info3)
+                    
+                    // info.innerHTML += `
+                    //     <ul>
+                    //         <li>${info3[0]}</li>
+                    //         <li>${info3[1]}</li>
+                    //         <li>${info3[2]}</li>
+                    //     </ul>
+                    //     <p></p>
+                    // `
+
+                    var ul = document.createElement('ul');
+                    for(var i = 0; i < 3; i++){
+                        var li = document.createElement('li');
+                        li.innerHTML = info3[i];
+                        ul.appendChild(li);
+                    }
+                    info.appendChild(ul);
+                });
+            
+            });
+
+
+
+            
+        </script>
+    </body>
+</html>
