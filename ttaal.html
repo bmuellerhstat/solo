@@ -81,13 +81,12 @@
                 info.style.display = 'block';
                 
 
-                // var data = `Brian	Brian's truth 1	Brian's truth 2	Brian's lie
+//                 var data = `Brian	Brian's truth 1	Brian's truth 2	Brian's lie
 // Emily	Emily's truth 1	Emily's truth 2	Emily's lie`
 
                 var data = document.querySelector('#sheet').value;
 
                 dataArr = data.split(/[\n\t]/)
-                // console.log(dataArr)
                 people = []
 
                 var currentPersonIndex = -1;
@@ -95,7 +94,6 @@
                     if(i % 4 == 0) { // name
                         currentPersonIndex++;
                         people.push({"name":dataArr[i]})
-                        // console.log(dataArr[i])
                     } else if(i % 4 == 1) { // truth 1
                         people[currentPersonIndex].truth1 = dataArr[i]
                     }  else if(i % 4 == 2) { // truth 2
@@ -109,33 +107,15 @@
                     array.sort(() => Math.random() - 0.5);
                 }
 
-                // var randomPerson = people[Math.floor(Math.random()*people.length)]
-                // console.log(randomPerson.name)
-                // var info3 = [randomPerson.truth1, randomPerson.truth2, randomPerson.lie]
-                // console.log("Lie: " + randomPerson.lie)
-                // shuffle(info3)
-
                 people.forEach(function(person){
                     var h1name = document.createElement('h1');
                     h1name.innerHTML = person.name;
-                    h1name.addEventListener('click',function(){
-                        alert(person.lie);
-                    });
                     info.appendChild(h1name)
                     
                     var info3 = [person.truth1, person.truth2, person.lie]
                     shuffle(info3)
                     console.log(info3)
                     
-                    // info.innerHTML += `
-                    //     <ul>
-                    //         <li>${info3[0]}</li>
-                    //         <li>${info3[1]}</li>
-                    //         <li>${info3[2]}</li>
-                    //     </ul>
-                    //     <p></p>
-                    // `
-
                     var ul = document.createElement('ul');
                     for(var i = 0; i < 3; i++){
                         var li = document.createElement('li');
@@ -143,6 +123,17 @@
                         ul.appendChild(li);
                     }
                     info.appendChild(ul);
+
+                    h1name.addEventListener('click',function(){
+                        let tidbits = this.nextElementSibling.childNodes;
+                        tidbits.forEach(function(tidbit){
+                            if(tidbit.innerHTML == person.lie){
+                                tidbit.style.color = 'red';
+                            } else {
+                                tidbit.style.color = 'green';
+                            }
+                        });
+                    });
                 });
             
             });
