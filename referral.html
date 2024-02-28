@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
+        <style>
+            /* CSS */
+            body {
+                padding-top: 30px;
+            }
+        </style>
+        
+        <title>Dean's Referral Filler</title>
+    </head>
+    <body>
+        <!-- HTML -->
+
+        <div class="container">
+            <h1>Dean's Referral Filler</h1><br>
+            
+            <div class="mb-3">
+                <label for="baseurl" class="form-label">Form URL</label>
+                <input type="text" class="form-control" id="baseurl" value="https://docs.google.com/forms/d/e/1FAIpQLSe3mM8s8wtvBrVi7OuOtvIe1WVe4w-D6u3246fWm1sKKT70Kg/viewform">
+            </div>
+
+            <div class="mb-3">
+                <label for="teacher" class="form-label">Teacher Name</label>
+                <input type="text" class="form-control" id="teacher" value="Brian Mueller">
+            </div>
+
+            <div class="mb-3">
+                <label for="room" class="form-label">Location</label>
+                <input type="text" class="form-control" id="room" value="210">
+            </div>
+
+            <div class="mb-3">
+                <label for="incident" class="form-label">Incident</label>
+                <select id="incident" class="form-control">
+                    <option>B05 Bringing items to or using items in school in violation of Department of Education or school policy</option>
+                    <option>B04 Being late for school or class</option>
+                </select>
+            </div>
+
+            <a href="#" id="filledurl" target="_blank">URL</a>
+        </div>
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="script.js"></script> -->
+        <script>
+            // JS
+
+            let baseurl = document.querySelector('#baseurl').value;
+            let teacher_value = document.querySelector('#teacher').value.replace(/ /g, '+');
+            let room_value = document.querySelector('#room').value;
+            let incident_value = document.querySelector('#incident').value.replace(/ /g, '+');
+            
+            // from original google form
+            // how to retrieve entry ID: unable to get <input name="entry..."> so had to view:page-source and search for field text, then locate numerical ID shortly after (inside array)
+            const teacher_id = 577959843;
+            const ap_id = 1500936520;
+            const date_id = 222599002;
+            const time_id = 682365013;
+            const room_id = 1339767199;
+            const incident_id = 1103439449;
+            const incident_description_id = 946878308;
+            const interventions_id = 561468992;
+
+            function twoDigit(num){
+                return num < 10 ? "0" + num : num;
+            }
+
+            let today = new Date();
+            let date_value = today.getFullYear() + "-" + twoDigit(today.getMonth()+1) + "-" + twoDigit(today.getDate()); // yyyy-mm-dd
+            let time_value = twoDigit(today.getHours()) + ":" + twoDigit(today.getMinutes());
+
+            let teacher_combo = "entry." + teacher_id + "=" + teacher_value + "&";
+            let ap_combo = "entry." + ap_id + "=" + "evierling@schools.nyc.gov" + "&";
+            let date_combo = "entry." + date_id + "=" + date_value + "&";
+            let time_combo = "entry." + time_id + "=" + time_value + "&";
+            let room_combo = "entry." + room_id + "=" + room_value + "&";
+            let incident_combo = "entry." + incident_id + "=" + incident_value + "&";
+
+            // WIP
+            let incident_description_combo = "";
+            // let incident_description_combo = "entry." + incident_description_id + "=" + incident_description_value + "&";
+
+            let interventions_combo1 = "entry." + interventions_id + "=" + "Conference+with+student" + "&";
+            let interventions_combo2 = "entry." + interventions_id + "=" + "Parent+contact+made" + "&";
+            let interventions_combo3 = "entry." + interventions_id + "=" + "Discussion+with+AP" + "&";
+            let interventions_combo = interventions_combo1 + interventions_combo2 + interventions_combo3
+
+            let url_combo = baseurl + "?" + teacher_combo + ap_combo + date_combo + time_combo + room_combo + incident_combo + incident_description_combo + interventions_combo;
+
+            let filledurl = document.querySelector('#filledurl');
+            filledurl.href = url_combo;
+            // filledurl.innerHTML = url_combo;
+
+
+            
+        </script>
+    </body>
+</html>
