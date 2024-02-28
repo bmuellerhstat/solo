@@ -37,15 +37,53 @@
                 <input type="text" class="form-control" id="room" value="210">
             </div>
 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="incident" class="form-label">Incident</label>
                 <select id="incident" class="form-control">
                     <option>B05 Bringing items to or using items in school in violation of Department of Education or school policy</option>
                     <option>B04 Being late for school or class</option>
                 </select>
+            </div> -->
+
+            <!-- <p><a href="#" id="filledurl" target="_blank">URL</a></p> -->
+
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Phone 📱</h5>
+                                <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                <div class="mb-3">
+                                    <!-- <label for="phone" class="form-label">Description</label> -->
+                                    <input type="text" class="form-control" id="phone" value="Student is consistently on their phone.">
+                                </div>
+                                <a href="#" class="btn btn-primary" id="phoneurl" target="_blank">Go</a>
+                            </div>
+                          </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Late 🕗</h5>
+                                <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                <div class="mb-3">
+                                    <!-- <label for="late" class="form-label">Description</label> -->
+                                    <input type="text" class="form-control" id="late" value="Student is consistently late to class.">
+                                </div>
+                                <a href="#" class="btn btn-primary" id="lateurl" target="_blank">Go</a>
+                            </div>
+                          </div>
+                    </div>
+
+                </div>
             </div>
 
-            <a href="#" id="filledurl" target="_blank">URL</a>
+            <!-- <h1><a href="">Phone 📱</a></h1>
+            <h1><a href="">Late 🕗</a></h1> -->
+
         </div>
         
         
@@ -57,7 +95,12 @@
             let baseurl = document.querySelector('#baseurl').value;
             let teacher_value = document.querySelector('#teacher').value.replace(/ /g, '+');
             let room_value = document.querySelector('#room').value;
-            let incident_value = document.querySelector('#incident').value.replace(/ /g, '+');
+            // let incident_value = document.querySelector('#incident').value.replace(/ /g, '+');
+            let incident_phone_value = "B05 Bringing items to or using items in school in violation of Department of Education or school policy".replace(/ /g, '+');
+            let incident_late_value = "B04 Being late for school or class".replace(/ /g, '+');
+            let incident_phone_description_value = document.querySelector('#phone').value;
+            let incident_late_description_value = document.querySelector('#late').value;
+            
             
             // from original google form
             // how to retrieve entry ID: unable to get <input name="entry..."> so had to view:page-source and search for field text, then locate numerical ID shortly after (inside array)
@@ -83,23 +126,33 @@
             let date_combo = "entry." + date_id + "=" + date_value + "&";
             let time_combo = "entry." + time_id + "=" + time_value + "&";
             let room_combo = "entry." + room_id + "=" + room_value + "&";
-            let incident_combo = "entry." + incident_id + "=" + incident_value + "&";
 
-            // WIP
-            let incident_description_combo = "";
-            // let incident_description_combo = "entry." + incident_description_id + "=" + incident_description_value + "&";
+            // let incident_combo = "entry." + incident_id + "=" + incident_value + "&";
+            let incident_phone_combo = "entry." + incident_id + "=" + incident_phone_value + "&";
+            let incident_late_combo = "entry." + incident_id + "=" + incident_late_value + "&";
+
+            // let incident_description_combo = "";
+            let incident_phone_description_combo = "entry." + incident_description_id + "=" + incident_phone_description_value + "&";
+            let incident_late_description_combo = "entry." + incident_description_id + "=" + incident_late_description_value + "&";
 
             let interventions_combo1 = "entry." + interventions_id + "=" + "Conference+with+student" + "&";
             let interventions_combo2 = "entry." + interventions_id + "=" + "Parent+contact+made" + "&";
             let interventions_combo3 = "entry." + interventions_id + "=" + "Discussion+with+AP" + "&";
             let interventions_combo = interventions_combo1 + interventions_combo2 + interventions_combo3
 
-            let url_combo = baseurl + "?" + teacher_combo + ap_combo + date_combo + time_combo + room_combo + incident_combo + incident_description_combo + interventions_combo;
+            // let url_combo = baseurl + "?" + teacher_combo + ap_combo + date_combo + time_combo + room_combo + incident_combo + incident_description_combo + interventions_combo;
+            let phone_url_combo = baseurl + "?" + teacher_combo + ap_combo + date_combo + time_combo + room_combo + incident_phone_combo + incident_phone_description_combo + interventions_combo;
+            let late_url_combo = baseurl + "?" + teacher_combo + ap_combo + date_combo + time_combo + room_combo + incident_late_combo + incident_late_description_combo + interventions_combo;
+            
 
-            let filledurl = document.querySelector('#filledurl');
-            filledurl.href = url_combo;
-            // filledurl.innerHTML = url_combo;
+            // let filledurl = document.querySelector('#filledurl');
+            // filledurl.href = url_combo;
 
+            let phone_filledurl = document.querySelector('#phoneurl');
+            phone_filledurl.href = phone_url_combo;
+            let late_filledurl = document.querySelector('#lateurl');
+            late_filledurl.href = late_url_combo;
+            
 
             
         </script>
