@@ -92,9 +92,25 @@
         <script>
             // JS
 
+            var urlParams = new URLSearchParams(window.location.search);
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            };
+            var userteacher = getUrlParameter('teacher');
+            var userroom = getUrlParameter('location');
+
+
             let baseurl = document.querySelector('#baseurl').value;
+            
+            // URL params
+            document.querySelector('#teacher').value = userteacher;
+            document.querySelector('#room').value = userroom;
             let teacher_value = document.querySelector('#teacher').value.replace(/ /g, '+');
             let room_value = document.querySelector('#room').value;
+            
             // let incident_value = document.querySelector('#incident').value.replace(/ /g, '+');
             let incident_phone_value = "B05 Bringing items to or using items in school in violation of Department of Education or school policy".replace(/ /g, '+');
             let incident_late_value = "B04 Being late for school or class".replace(/ /g, '+');
