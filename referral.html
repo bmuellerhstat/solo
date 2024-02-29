@@ -37,6 +37,16 @@
                 <input type="text" class="form-control" id="room" value="210">
             </div>
 
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="text" class="form-control" id="date" value="" disabled>
+            </div>
+
+            <div class="mb-3">
+                <label for="time" class="form-label">Time</label>
+                <input type="text" class="form-control" id="time" value="" disabled>
+            </div>
+
             <!-- <div class="mb-3">
                 <label for="incident" class="form-label">Incident</label>
                 <select id="incident" class="form-control">
@@ -136,6 +146,10 @@
             let today = new Date();
             let date_value = today.getFullYear() + "-" + twoDigit(today.getMonth()+1) + "-" + twoDigit(today.getDate()); // yyyy-mm-dd
             let time_value = twoDigit(today.getHours()) + ":" + twoDigit(today.getMinutes());
+
+            // update DOM
+            document.querySelector('#date').value = date_value;
+            document.querySelector('#time').value = time_value;
 
             let teacher_combo = "entry." + teacher_id + "=" + teacher_value + "&";
             let ap_combo = "entry." + ap_id + "=" + "evierling@schools.nyc.gov" + "&";
