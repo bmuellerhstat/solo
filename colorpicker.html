@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Sliders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Small custom tweak for smoother slider thumbs */
+        input[type=range] {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen font-sans antialiased text-slate-800 p-4">
+
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-100">
+        <h1 class="text-2xl font-bold text-center mb-8 text-slate-700">RGB Sliders</h1>
+
+        <!-- Sliders Section -->
+        <div class="space-y-6">
+            
+            <!-- Red Slider -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="red" class="text-red-500 font-semibold tracking-wide uppercase text-sm">Red</label>
+                    <span id="red-val" class="text-slate-500 font-mono text-sm bg-slate-100 px-2 py-0.5 rounded">0</span>
+                </div>
+                <input type="range" id="red" min="0" max="255" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none accent-red-500 focus:outline-none focus:ring-2 focus:ring-red-200">
+            </div>
+
+            <!-- Green Slider -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="green" class="text-green-500 font-semibold tracking-wide uppercase text-sm">Green</label>
+                    <span id="green-val" class="text-slate-500 font-mono text-sm bg-slate-100 px-2 py-0.5 rounded">0</span>
+                </div>
+                <input type="range" id="green" min="0" max="255" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none accent-green-500 focus:outline-none focus:ring-2 focus:ring-green-200">
+            </div>
+
+            <!-- Blue Slider -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="blue" class="text-blue-500 font-semibold tracking-wide uppercase text-sm">Blue</label>
+                    <span id="blue-val" class="text-slate-500 font-mono text-sm bg-slate-100 px-2 py-0.5 rounded">0</span>
+                </div>
+                <input type="range" id="blue" min="0" max="255" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none accent-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
+            </div>
+
+        </div>
+
+        <!-- Preview Section -->
+        <div class="mt-8">
+            <div id="color-box" class="w-full h-32 rounded-xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] border border-slate-200 transition-colors duration-75"></div>
+            
+            <div class="flex justify-center mt-3">
+                <button id="hex-btn" class="text-sm text-slate-400 font-mono hover:text-slate-600 transition-colors px-3 py-1 rounded-md hover:bg-slate-100 cursor-pointer group relative" title="Click to copy">
+                    <span id="hex-val">#808080</span>
+                    <!-- Tooltip -->
+                    <span id="copy-tooltip" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity pointer-events-none">Copied!</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // DOM Elements
+        const redSlider = document.getElementById('red');
+        const greenSlider = document.getElementById('green');
+        const blueSlider = document.getElementById('blue');
+
+        const redVal = document.getElementById('red-val');
+        const greenVal = document.getElementById('green-val');
+        const blueVal = document.getElementById('blue-val');
+
+        const colorBox = document.getElementById('color-box');
+        const hexVal = document.getElementById('hex-val');
+        const hexBtn = document.getElementById('hex-btn');
+        const copyTooltip = document.getElementById('copy-tooltip');
+
+        // Function to convert single RGB value to a 2-digit Hex string
+        function rgbToHexPart(c) {
+            const hex = c.toString(16);
+            return hex.length === 1 ? "0" + hex : hex;
+        }
+
+        // Main update function
+        function updateColor() {
+            // Get current values
+            const r = parseInt(redSlider.value);
+            const g = parseInt(greenSlider.value);
+            const b = parseInt(blueSlider.value);
+
+            // Update text labels
+            redVal.textContent = r;
+            greenVal.textContent = g;
+            blueVal.textContent = b;
+
+            // Update color box
+            colorBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+            // Update hex code
+            const hexString = `#${rgbToHexPart(r)}${rgbToHexPart(g)}${rgbToHexPart(b)}`.toUpperCase();
+            hexVal.textContent = hexString;
+        }
+
+        // Event listeners for sliders
+        redSlider.addEventListener('input', updateColor);
+        greenSlider.addEventListener('input', updateColor);
+        blueSlider.addEventListener('input', updateColor);
+
+        // Click to copy hex code
+        hexBtn.addEventListener('click', () => {
+            const currentHex = hexVal.textContent;
+            
+            // Fallback copy method compatible with more environments
+            const textArea = document.createElement("textarea");
+            textArea.value = currentHex;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                
+                // Show tooltip
+                copyTooltip.classList.remove('opacity-0');
+                copyTooltip.classList.add('opacity-100');
+                
+                // Hide tooltip after 1.5 seconds
+                setTimeout(() => {
+                    copyTooltip.classList.remove('opacity-100');
+                    copyTooltip.classList.add('opacity-0');
+                }, 1500);
+            } catch (err) {
+                console.error('Failed to copy text', err);
+            }
+            
+            document.body.removeChild(textArea);
+        });
+
+        // Initialize UI with starting values
+        updateColor();
+    </script>
+</body>
+</html>
